@@ -8,6 +8,9 @@ public class UserInterface {
 
     public static void main(String[] args) {
         displayMenu();
+
+        DealershipFileManager fileManager = new DealershipFileManager();
+        Dealership dealership = fileManager.getDealership("src/main/resources/inventory.csv");
     }
 
     private static void displayMenu() {
