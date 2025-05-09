@@ -12,7 +12,7 @@ public class DealershipFileManager {
             String line = reader.readLine();
 
             if (line != null) {
-                // Dealership info (1st line) ie. name address number
+                // Dealership info (1st line) i.e. name address number
                 String[] dealershipParts = line.split(Pattern.quote("|"));
                 dealership = new Dealership(dealershipParts[0], dealershipParts[1], dealershipParts[2]);
             }
