@@ -12,7 +12,7 @@ public class UserInterface {
         init(); // load dealership from file
 
         int choice = 0;
-        do {
+        do { //runs everything while user choice is not 99
             displayMenu();
 
             try {
