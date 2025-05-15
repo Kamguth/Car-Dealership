@@ -31,7 +31,7 @@ public class UserInterface {
                 case 6 -> processGetByTypeRequest();
                 case 7 -> processGetAllVehiclesRequest();
                 case 8 -> addVehicleProcess();
-                case 9 -> System.out.println("Option 9: Remove a vehicle"); // or implement remove here
+                case 9 -> removeVehicleProcess();
                 case 99 -> System.out.println("Goodbye!");
                 default -> System.out.println("Invalid choice! Please select a valid option.");
             }
@@ -78,6 +78,7 @@ public class UserInterface {
             System.out.println("Invalid input! Please enter a valid number for price.");
         }
     }
+
     //Option 2: Find by make/model
     private static void processGetByMakeModelRequest() {
         System.out.println("Option 2: Find vehicles by make and model");
@@ -90,6 +91,7 @@ public class UserInterface {
         List<Vehicle> results = dealership.getVehiclesByMakeModel(make, model);
         displayVehicles(results);
     }
+
     //Option 3: find by year range
     private static void processGetByYearRequest() {
         System.out.println("Option 3: Find vehicles by year range");
@@ -106,6 +108,7 @@ public class UserInterface {
             System.out.println("Invalid input. Please enter valid years.");
         }
     }
+
     //Option 4: find by color
     private static void processGetByColorRequest() {
         System.out.println("Option 4: Find vehicles by color");
@@ -202,4 +205,33 @@ public class UserInterface {
             System.out.println("Invalid input. Operation cancelled.");
         }
     }
-}
+        //Option 9: remove vehicle by vin
+        private static void removeVehicleProcess () {
+            try {
+                System.out.print("Enter VIN of vehicle to remove: ");
+                int vin = Integer.parseInt(scanner.nextLine());
+
+                Vehicle vehicleToRemove = null;
+                for (Vehicle v : dealership.getAllVehicles()) {
+                    if (v.getVin() == vin) {
+                        vehicleToRemove = v;
+                        break;
+                    }
+                }
+
+                if (vehicleToRemove != null) {
+                    dealership.removeVehicle(vehicleToRemove);
+                    DealershipFileManager fileManager = new DealershipFileManager();
+                    fileManager.saveDealership(dealership, "src/main/resources/inventory.csv");
+                    System.out.println("Vehicle removed successfully.");
+                } else {
+                    System.out.println("Vehicle with VIN " + vin + " not found.");
+                }
+
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid VIN input.");
+            }
+        }
+    }
+
+
